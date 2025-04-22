@@ -1,0 +1,42 @@
+name: Auto commit
+
+on:
+  push:
+    branches:
+      - main
+  schedule: # 03:00 JST == 18:00 UTC
+  - cron: "0 18 * * *"
+
+env:
+  TZ: "Asia/Kolkata"
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  auto_commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3      
+        with:
+         persist-credentials: false
+         fetch-depth: 0
+  
+      - name: Install Python 3
+        run: |
+          sudo apt update -y
+          sudo apt install python3
+          
+      - name: Commit
+        run: |          
+          git config --local user.email shivamx976@gmail.com
+          git config --local user.name "ShivamX087"
+          git add -A
+          git commit -m "`date`"
+  
+      - name: Push
+        uses: ad-m/github-push-action@main
+        with:
+          directory: "."
+          github_token: ${{ secrets.GITHUB_TOKEN }}
