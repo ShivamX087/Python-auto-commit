@@ -30,7 +30,7 @@ jobs:
           
       - name: Commit
         run: |
-          python3 auto-commit.py
+          python3 auto-commit.py > OUTPUT
           git config --local user.email shivamx976@gmail.com
           git config --local user.name "ShivamX087"
           git add -A
