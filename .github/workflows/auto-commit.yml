@@ -3,7 +3,7 @@ name: Auto commit
 on:
   push:
     branches:
-      - main
+      - master
   schedule: # 03:00 JST == 18:00 UTC
   - cron: "0 18 * * *"
 
@@ -29,14 +29,15 @@ jobs:
           sudo apt install python3
           
       - name: Commit
-        run: |          
+        run: |
+          python3 autocommit.py
           git config --local user.email shivamx976@gmail.com
           git config --local user.name "ShivamX087"
           git add -A
           git commit -m "`date`"
   
       - name: Push
-        uses: ad-m/github-push-action@main
+        uses: ad-m/github-push-action@master
         with:
           directory: "."
           github_token: ${{ secrets.GITHUB_TOKEN }}
